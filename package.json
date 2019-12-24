@@ -1,0 +1,50 @@
+{
+  "name": "class-ext",
+  "version": "0.0.0",
+  "description": "Class extension method",
+  "main": "index.js",
+  "author": {
+    "name": "Overlook Motel"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/overlookmotel/class-ext.git"
+  },
+  "bugs": {
+    "url": "https://github.com/overlookmotel/class-ext/issues"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@overlookmotel/eslint-config": "^5.0.1",
+    "@overlookmotel/eslint-config-jest": "^3.0.1",
+    "coveralls": "^3.0.9",
+    "cross-env": "^6.0.3",
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-eslint-comments": "^3.1.2",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
+    "eslint-plugin-node": "^10.0.0",
+    "jest": "^24.9.0"
+  },
+  "keywords": [
+    "class",
+    "extend",
+    "extensions"
+  ],
+  "scripts": {
+    "test": "npm run lint && npm run test-main",
+    "lint": "eslint '*.js' '.*.js' '**/*.js' '**/.*.js'",
+    "lint-fix": "eslint '*.js' '.*.js' '**/*.js' '**/.*.js' --fix",
+    "test-main": "cross-env NODE_ENV=production jest",
+    "cover": "npm run cover-main && rm -rf coverage",
+    "coveralls": "npm run cover-main && cat ./coverage/lcov.info | coveralls && rm -rf ./coverage",
+    "cover-main": "cross-env COVERAGE=true NODE_ENV=production jest --coverage",
+    "ci": "if [ $COVERAGE ]; then npm run coveralls; else npm test; fi"
+  },
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "readmeFilename": "README.md",
+  "license": "MIT"
+}
