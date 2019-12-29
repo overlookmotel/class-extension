@@ -1,8 +1,8 @@
 /* --------------------
- * class-ext module
+ * class-extension module
  * ------------------*/
 
 'use strict';
 
 // Exports
-module.exports = {};
+module.exports = require('./lib/index');

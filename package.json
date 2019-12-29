@@ -1,31 +1,38 @@
 {
-  "name": "class-ext",
+  "name": "class-extension",
   "version": "0.0.0",
-  "description": "Class extension method",
+  "description": "Class extensions",
   "main": "index.js",
   "author": {
     "name": "Overlook Motel"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/overlookmotel/class-ext.git"
+    "url": "https://github.com/overlookmotel/class-extension.git"
   },
   "bugs": {
-    "url": "https://github.com/overlookmotel/class-ext/issues"
+    "url": "https://github.com/overlookmotel/class-extension/issues"
   },
-  "dependencies": {},
+  "dependencies": {
+    "has-own-prop": "^2.0.0",
+    "is-it-type": "^1.2.0",
+    "semver": "^7.1.1",
+    "symbols-collection": "^1.1.1"
+  },
   "devDependencies": {
-    "@overlookmotel/eslint-config": "^5.0.1",
+    "@overlookmotel/eslint-config": "^6.0.1",
     "@overlookmotel/eslint-config-jest": "^3.0.1",
+    "@overlookmotel/eslint-config-node": "^1.0.2",
     "coveralls": "^3.0.9",
     "cross-env": "^6.0.3",
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-eslint-comments": "^3.1.2",
     "eslint-plugin-import": "^2.19.1",
-    "eslint-plugin-jest": "^23.1.1",
-    "eslint-plugin-node": "^10.0.0",
-    "jest": "^24.9.0"
+    "eslint-plugin-jest": "^23.2.0",
+    "eslint-plugin-node": "^11.0.0",
+    "jest": "^24.9.0",
+    "jest-extended": "^0.11.2"
   },
   "keywords": [
     "class",
