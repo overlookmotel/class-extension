@@ -3,13 +3,6 @@
 module.exports = {
 	testEnvironment: 'node',
 	coverageDirectory: 'coverage',
-	collectCoverageFrom: [
-		'**/*.js',
-		'!.**',
-		'!**/.**',
-		'!**/node_modules/**',
-		'!test/**',
-		'!jest.config.js'
-	],
+	collectCoverageFrom: ['index.js', 'lib/**/*.js'],
 	setupFilesAfterEnv: ['jest-extended']
 };
