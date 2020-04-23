@@ -3,6 +3,9 @@
   "version": "0.2.0",
   "description": "Class extensions",
   "main": "index.js",
+  "files": [
+    "lib/**/*.js"
+  ],
   "author": {
     "name": "Overlook Motel"
   },
