@@ -8,7 +8,7 @@
 'use strict';
 
 // Modules
-const {Extension} = require('../index');
+const {Extension} = require('class-extension');
 
 // Tests
 

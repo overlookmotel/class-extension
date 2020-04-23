@@ -6,7 +6,7 @@
 'use strict';
 
 // Modules
-const {addMethodsToClass, Extension} = require('../index');
+const {addMethodsToClass, Extension} = require('class-extension');
 
 // Tests
 
