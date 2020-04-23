@@ -1,4 +1,11 @@
+/* --------------------
+ * class-extension module
+ * Jest config
+ * ------------------*/
+
 'use strict';
+
+// Exports
 
 module.exports = {
 	testEnvironment: 'node',
