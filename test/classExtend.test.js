@@ -73,6 +73,16 @@ describe('`.classExtend()`', () => {
 			expect(OutClass).toBe(Class);
 		});
 
+		it('accepts extension returning sub sub class', () => {
+			class Class {}
+			const extension = new Extension((InClass) => {
+				const Class2 = class extends InClass {};
+				return class extends Class2 {};
+			});
+			const OutClass = classExtend(Class, extension);
+			expect(OutClass).toBeFunction();
+		});
+
 		it('throws if extension extend function returns null', () => {
 			const extension = new Extension(() => null);
 			expect(() => {
