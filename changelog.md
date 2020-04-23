@@ -1,5 +1,34 @@
 # Changelog
 
+## 0.2.1
+
+Bug fixes:
+
+* Fix error on double subclassing in extension
+
+Refactor:
+
+* Fully specify require file paths
+
+No code:
+
+* File header comments
+
+Tests:
+
+* Run tests in dev mode
+* Import from package name [refactor]
+
+Dev:
+
+* Update dev dependencies
+* Run tests on CI on Node v14
+* Replace `.npmignore` with `files` list in `package.json`
+* `.editorconfig` config
+* Simplify Jest config
+* ESLint lint dot files
+* Remove unnecessary line from `.gitignore`
+
 ## 0.2.0
 
 Breaking changes:
