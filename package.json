@@ -1,6 +1,6 @@
 {
   "name": "class-extension",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Class extensions",
   "main": "index.js",
   "files": [

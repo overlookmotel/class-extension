@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.3
+
+Features:
+
+* `isDirectlyExtended` methods
+
 ## 0.2.2
 
 Features:
