@@ -213,6 +213,30 @@ bill.isExtendedWith( monkeyExtension );
 // => true
 ```
 
+### `.isDirectlyExtended()` static method
+
+Use to determine if a class has been subclassed since it was last extended.
+
+```js
+const Monkey = Animal.extend( monkeyExtension );
+class Baboon extends Monkey {}
+Monkey.isDirectlyExtended(); // => true
+Baboon.isDirectlyExtended(); // => false
+```
+
+### `.isDirectlyExtended()` prototype method
+
+Use to determine if an object is an instance of a class which has been subclassed since it was last extended.
+
+```js
+const Monkey = Animal.extend( monkeyExtension );
+class Baboon extends Monkey {}
+const bill = new Monkey( 'Bill' );
+const pete = new Baboon( 'Pete' );
+bill.isDirectlyExtended(); // => true
+pete.isDirectlyExtended(); // => false
+```
+
 ### `.getExtensions()` static method
 
 Get list of extensions which have been applied to a class.
