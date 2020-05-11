@@ -1,5 +1,28 @@
 # Changelog
 
+## 0.2.2
+
+Features:
+
+* `getExtensions` methods
+
+Deps:
+
+* Update `is-it-type` dependency
+* Update `semver` dependency
+
+No code:
+
+* Fix code comment typos
+
+Dev:
+
+* Update dev dependencies
+
+Docs:
+
+* Fix whitespace
+
 ## 0.2.1
 
 Bug fixes:
