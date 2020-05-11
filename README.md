@@ -297,7 +297,7 @@ module.exports = new Extension( {
   name: 'monkey',
   version: '1.0.0',
   extend(Class) {
-	return class extends Class { /* ... */ };
+    return class extends Class { /* ... */ };
   }
 } );
 ```
@@ -308,7 +308,7 @@ Or an object and an extend function:
 module.exports = new Extension(
   {
     name: 'monkey',
-	version: '1.0.0'
+    version: '1.0.0'
   },
   Class => class extends Class { /* ... */ }
 );
