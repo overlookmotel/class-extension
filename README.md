@@ -213,6 +213,27 @@ bill.isExtendedWith( monkeyExtension );
 // => true
 ```
 
+### `.getExtensions()` static method
+
+Get list of extensions which have been applied to a class.
+
+```js
+const Monkey = Animal.extend( monkeyExtension );
+Monkey.getExtensions();
+// => [ monkeyExtension ]
+```
+
+### `.getExtensions()` prototype method
+
+Get list of extensions which have been applied to an instance of a class.
+
+```js
+const Monkey = Animal.extend( monkeyExtension );
+const bill = new Monkey( 'Bill' );
+bill.getExtensions();
+// => [ monkeyExtension ]
+```
+
 ### Deduplication
 
 #### Dependency deduplication
