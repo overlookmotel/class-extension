@@ -19,7 +19,7 @@
   "dependencies": {
     "has-own-prop": "^2.0.0",
     "is-it-type": "^4.0.0",
-    "semver": "^7.1.1",
+    "semver": "^7.3.2",
     "symbols-collection": "^2.0.0"
   },
   "devDependencies": {
