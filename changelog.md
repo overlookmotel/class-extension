@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.2.4
+
+Bug fixes:
+
+* Correct name of `classIsDirectlyExtended` method
+
 ## 0.2.3
 
 Features:
