@@ -184,7 +184,7 @@ const { addMethodsToClass } = require('class-extension');
 addMethodsToClass( MyClass );
 ```
 
-### `.extend()` method
+#### `.extend()` method
 
 `.extend()` can be called on any class which has had the method added (as above), or any of its subclasses.
 
@@ -192,7 +192,7 @@ addMethodsToClass( MyClass );
 
 It will return a subclass of the original class it was called on.
 
-### `.isExtendedWith()` static method
+#### `.isExtendedWith()` static method
 
 Use to determine if a class has been extended with a particular extension.
 
@@ -202,7 +202,7 @@ Monkey.isExtendedWith( monkeyExtension );
 // => true
 ```
 
-### `.isExtendedWith()` prototype method
+#### `.isExtendedWith()` prototype method
 
 Use to determine if an object is an instance of a class which was extended with a particular extension.
 
@@ -213,7 +213,7 @@ bill.isExtendedWith( monkeyExtension );
 // => true
 ```
 
-### `.isDirectlyExtended()` static method
+#### `.isDirectlyExtended()` static method
 
 Use to determine if a class has been subclassed since it was last extended.
 
@@ -224,7 +224,7 @@ Monkey.isDirectlyExtended(); // => true
 Baboon.isDirectlyExtended(); // => false
 ```
 
-### `.isDirectlyExtended()` prototype method
+#### `.isDirectlyExtended()` prototype method
 
 Use to determine if an object is an instance of a class which has been subclassed since it was last extended.
 
@@ -237,7 +237,7 @@ bill.isDirectlyExtended(); // => true
 pete.isDirectlyExtended(); // => false
 ```
 
-### `.getExtensions()` static method
+#### `.getExtensions()` static method
 
 Get list of extensions which have been applied to a class.
 
@@ -247,7 +247,7 @@ Monkey.getExtensions();
 // => [ monkeyExtension ]
 ```
 
-### `.getExtensions()` prototype method
+#### `.getExtensions()` prototype method
 
 Get list of extensions which have been applied to an instance of a class.
 
