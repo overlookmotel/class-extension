@@ -177,7 +177,7 @@ The function must return a subclass of that class.
 
 ### Equip a class for extension
 
-Add `.extend()` (and a few other methods) to a class with:
+Add `.extend()` (and the other methods below) to a class with:
 
 ```js
 const { addMethodsToClass } = require('class-extension');
