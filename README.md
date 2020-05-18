@@ -403,7 +403,57 @@ If you attempt to apply multiple different *versions* of the same extension to a
 
 This is in case you're relying on some functionality of a specific version of the extension (e.g. `2.0.0`). If the extension has already been applied, but is an earlier version (e.g. `1.2.0`), it may lack this functionality.
 
-In future, a mechanism for specifying an acceptable *range* of versions may be added to `class-extension`.
+You can loosen this restriction by providing an acceptable version range.
+
+##### When applying an extension
+
+Provide a `version` option to `.extend()` with a [semver version range](https://semver.npmjs.com/).
+
+```js
+const SubClass = MyClass.extend(
+  monkeyExtension,
+  { version: '^1.0.0' }
+);
+```
+
+##### In an extension
+
+Provide a `dependencies` option to `Extension()` constructor.
+
+This is useful if your extension extends other extensions. Perhaps you are using version `3.4.5` of another extension, but your extension can make do with any version above `3.0.0`.
+
+You can prevent version mismatch errors by providing the [version range](https://semver.npmjs.com/) you can accept for the dependencies.
+
+It's generally best to keep the version range as broad as possible. Only require what your extension *needs*, not just the latest for the sake of it. This allows your extension to interoperate happily with other extensions.
+
+```js
+const livesInJungleExtension = require('lives-in-jungle');
+livesInJungleExtension.version // => '3.4.5'
+
+const monkeyExtension = new Extension( {
+  name: 'monkey',
+  version: '1.0.0'
+  extends: [ livesInJungleExtension ],
+  dependencies: {
+    'lives-in-jungle': '^3.0.0'
+  },
+  extend: Class => class extends Class { /* ... */ }
+} );
+```
+
+`dependencies` has same structure as it does in `package.json`, so you can provide `name`, `version` and `dependencies` in one go by providing `package.json` as an options object:
+
+This has the same effect as the above example, assuming that a version range of `^3.0.0` is specified in `package.json`:
+
+```js
+const livesInJungleExtension = require('lives-in-jungle');
+
+const monkeyExtension = new Extension(
+  require('./package.json'),
+  { extends: [ livesInJungleExtension ] },
+  Class => class extends Class { /* ... */ }
+);
+```
 
 ## Versioning
 

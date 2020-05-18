@@ -181,17 +181,88 @@ describe('`.classExtend()`', () => {
 				const SubSubClass = classExtend(SubClass, extension);
 				expect(SubSubClass).toBe(SubClass);
 			});
+
+			it('named extension with same version', () => {
+				const extension1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
+					extension2 = new Extension('foo', '1.0.0', InClass => class extends InClass {});
+				const SubClass = classExtend(class Class {}, extension1);
+				const SubSubClass = classExtend(SubClass, extension2);
+				expect(SubSubClass).toBe(SubClass);
+			});
+
+			describe('named extension with version within version range', () => {
+				it('specified via option to `.extend()`', () => {
+					const extension1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
+						extension2 = new Extension('foo', '1.1.0', InClass => class extends InClass {});
+					const SubClass = classExtend(class Class {}, extension1);
+					const SubSubClass = classExtend(SubClass, extension2, {version: '^1.0.0'});
+					expect(SubSubClass).toBe(SubClass);
+				});
+
+				it('specified in extension dependencies', () => {
+					const extension1 = new Extension(
+						'foo', '1.0.0', InClass => class extends InClass {getVersion() { return '1.0.0'; }}
+					);
+					const extension2 = new Extension(
+						'foo', '1.1.0', InClass => class extends InClass {getVersion() { return '1.1.0'; }}
+					);
+					const extension3 = new Extension(
+						'bar', '0.0.0',
+						{dependencies: {foo: '^1.0.0'}},
+						[extension2],
+						InClass => class extends InClass {}
+					);
+
+					const SubClass = classExtend(class Class {}, extension1);
+					const SubSubClass = classExtend(SubClass, extension3);
+					const instance = new SubSubClass();
+					expect(instance.getVersion()).toBe('1.0.0');
+				});
+			});
 		});
 
-		it('throws if extend with different versions of same extension', () => {
-			const extension1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
-				extension2 = new Extension('foo', '2.0.0', InClass => class extends InClass {});
-			const SubClass = classExtend(class Class {}, extension1);
-			expect(() => {
-				classExtend(SubClass, extension2);
-			}).toThrowWithMessage(
-				Error, 'Class is already extended with a different version of this extension'
-			);
+		describe('throws if extend with different version of same extension', () => {
+			it('and no version range provided', () => {
+				const extension1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
+					extension2 = new Extension('foo', '2.0.0', InClass => class extends InClass {});
+				const SubClass = classExtend(class Class {}, extension1);
+				expect(() => {
+					classExtend(SubClass, extension2);
+				}).toThrow(new Error(
+					"Class is already extended with version 1.0.0 of extension 'foo', which differs from version 2.0.0 now being applied"
+				));
+			});
+
+			describe('and outside version range', () => {
+				it('specified via option to `.extend()`', () => {
+					const extension1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
+						extension2 = new Extension('foo', '2.0.0', InClass => class extends InClass {});
+					const SubClass = classExtend(class Class {}, extension1);
+					expect(() => {
+						classExtend(SubClass, extension2, {version: '^2.0.0'});
+					}).toThrow(new Error(
+						"Class is already extended with version 1.0.0 of extension 'foo', which does not satisfy specified version range '^2.0.0'"
+					));
+				});
+
+				it('specified in extension dependencies', () => {
+					const extension1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
+						extension2 = new Extension('foo', '2.0.0', InClass => class extends InClass {});
+					const extension3 = new Extension(
+						'bar', '0.0.0',
+						{dependencies: {foo: '^2.0.0'}},
+						[extension2],
+						InClass => class extends InClass {}
+					);
+
+					const SubClass = classExtend(class Class {}, extension1);
+					expect(() => {
+						classExtend(SubClass, extension3);
+					}).toThrow(new Error(
+						"Class is already extended with version 1.0.0 of extension 'foo', which does not satisfy specified version range '^2.0.0'"
+					));
+				});
+			});
 		});
 	});
 
