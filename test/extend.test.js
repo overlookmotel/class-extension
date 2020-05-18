@@ -18,7 +18,7 @@ describe('`.extend()`', () => {
 		const extension = new Extension(InClass => class extends InClass {});
 		const SubClass = Class.extend(extension);
 
-		expect(Object.getPrototypeOf(SubClass)).toBe(Class);
+		expect(SubClass).toBeDirectSubclassOf(Class);
 
 		const instance = new SubClass();
 		expect(instance).toBeInstanceOf(SubClass);
@@ -34,7 +34,7 @@ describe('`.extend()`', () => {
 		const SubClass = Class.extend(extension1);
 		const SubSubClass = SubClass.extend(extension2);
 
-		expect(Object.getPrototypeOf(SubSubClass)).toBe(SubClass);
+		expect(SubSubClass).toBeDirectSubclassOf(SubClass);
 
 		const instance = new SubSubClass();
 		expect(instance).toBeInstanceOf(SubSubClass);
