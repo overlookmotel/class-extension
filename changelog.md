@@ -1,5 +1,48 @@
 # Changelog
 
+## 0.3.0
+
+Breaking changes:
+
+* Provide extension dependencies with `extends` option
+* Remove standalone functions
+
+Features:
+
+* Support version ranges
+
+Bug fixes:
+
+* Fix error when using named extension after unnamed extension
+
+Refactor:
+
+* Rename `shared` file to `validate`
+* Refactor validation error prefixing
+
+Dependencies:
+
+* Update `symbols-collection` dependency
+
+No code:
+
+* Fix typo in code comment
+
+Tests:
+
+* Tests for `addMethodsToClass`
+* Use `jest-expect-subclass` for testing subclassing [refactor]
+* Remove repeated code [refactor]
+
+Dev:
+
+* Update dev dependencies
+
+Docs:
+
+* Amend wording
+* Formatting
+
 ## 0.2.4
 
 Bug fixes:
