@@ -20,7 +20,7 @@
     "has-own-prop": "^2.0.0",
     "is-it-type": "^4.0.0",
     "semver": "^7.3.2",
-    "symbols-collection": "^2.0.0"
+    "symbols-collection": "^2.0.1"
   },
   "devDependencies": {
     "@overlookmotel/eslint-config": "^7.1.2",
