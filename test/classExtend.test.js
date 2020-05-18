@@ -3,6 +3,8 @@
  * Tests for `classExtend` function
  * ------------------*/
 
+/* eslint-disable class-methods-use-this */
+
 'use strict';
 
 // Modules
@@ -63,6 +65,12 @@ describe('`.classExtend()`', () => {
 				classExtend(class Class {}, {name: 'foo', version: '1.0.0'});
 			}).toThrowWithMessage(TypeError, 'extension.extend must be a function');
 		});
+
+		it('throws if extension has no extends array', () => {
+			expect(() => {
+				classExtend(class Class {}, {name: 'foo', version: '1.0.0', extend() {}});
+			}).toThrowWithMessage(TypeError, 'extension.extends must be an array');
+		});
 	});
 
 	describe('validates extension return value', () => {
@@ -73,18 +81,18 @@ describe('`.classExtend()`', () => {
 			expect(OutClass).toBe(Class);
 		});
 
-		it('accepts extension returning sub sub class', () => {
-			class Class {}
+		it('throws if extension extend function returns null', () => {
+			const extension = new Extension(() => null);
+			expect(() => {
+				classExtend(class Class {}, extension);
+			}).toThrowWithMessage(TypeError, 'Extension did not return a subclass of original class');
+		});
+
+		it('throws if extension returns sub sub class', () => {
 			const extension = new Extension((InClass) => {
 				const Class2 = class extends InClass {};
 				return class extends Class2 {};
 			});
-			const OutClass = classExtend(Class, extension);
-			expect(OutClass).toBeFunction();
-		});
-
-		it('throws if extension extend function returns null', () => {
-			const extension = new Extension(() => null);
 			expect(() => {
 				classExtend(class Class {}, extension);
 			}).toThrowWithMessage(TypeError, 'Extension did not return a subclass of original class');
@@ -95,6 +103,66 @@ describe('`.classExtend()`', () => {
 			expect(() => {
 				classExtend(class Class {}, extension);
 			}).toThrowWithMessage(TypeError, 'Extension did not return a subclass of original class');
+		});
+	});
+
+	describe('adds dependent extensions', () => {
+		it('with one dependency', () => {
+			const extension1 = new Extension(InClass => class ExtClass1 extends InClass {ext1() {}});
+			const extension2 = new Extension(
+				[extension1],
+				InClass => class ExtClass2 extends InClass {ext2() {}}
+			);
+
+			class Class {}
+			const SubClass = classExtend(Class, extension2);
+
+			expect(SubClass).toBeSubclassOf(Class);
+			expect(SubClass).not.toBeDirectSubclassOf(Class);
+			const instance = new SubClass();
+			expect(instance.ext1).toBeFunction();
+			expect(instance.ext2).toBeFunction();
+		});
+
+		it('with two dependencies', () => {
+			const extension1 = new Extension(InClass => class ExtClass1 extends InClass {ext1() {}});
+			const extension2 = new Extension(InClass => class ExtClass2 extends InClass {ext2() {}});
+			const extension3 = new Extension(
+				[extension1, extension2],
+				InClass => class ExtClass3 extends InClass {ext3() {}}
+			);
+
+			class Class {}
+			const SubClass = classExtend(Class, extension3);
+
+			expect(SubClass).toBeSubclassOf(Class);
+			expect(SubClass).not.toBeDirectSubclassOf(Class);
+			const instance = new SubClass();
+			expect(instance.ext1).toBeFunction();
+			expect(instance.ext2).toBeFunction();
+			expect(instance.ext3).toBeFunction();
+		});
+
+		it('with nested dependencies', () => {
+			const extension1 = new Extension(InClass => class ExtClass1 extends InClass {ext1() {}});
+			const extension2 = new Extension(
+				[extension1],
+				InClass => class ExtClass2 extends InClass {ext2() {}}
+			);
+			const extension3 = new Extension(
+				[extension2],
+				InClass => class ExtClass3 extends InClass {ext3() {}}
+			);
+
+			class Class {}
+			const SubClass = classExtend(Class, extension3);
+
+			expect(SubClass).toBeSubclassOf(Class);
+			expect(SubClass).not.toBeDirectSubclassOf(Class);
+			const instance = new SubClass();
+			expect(instance.ext1).toBeFunction();
+			expect(instance.ext2).toBeFunction();
+			expect(instance.ext3).toBeFunction();
 		});
 	});
 

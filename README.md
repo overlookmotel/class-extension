@@ -123,19 +123,20 @@ ernie.sayHello();
 
 ### Extensions within an extension
 
-Extensions can also depend on other extensions themselves:
+Extensions can also depend on other extensions themselves by providing an `extends` option:
 
 ```js
-const monkeyExtension = new Extension( Class => {
-  Class = Class.extend( typeExtension )
-    .extend( livesInJungleExtension );
-
-  return class extends Class {
+const monkeyExtension = new Extension( {
+  extends: [
+    typeExtension,
+    livesInJungleExtension
+  ],
+  extend: Class => class extends Class {
     constructor( name ) {
       super( name );
       this.setType( 'monkey' );
     }
-  };
+  }
 } );
 
 const Monkey = Animal.extend( monkeyExtension );
@@ -143,6 +144,20 @@ const Monkey = Animal.extend( monkeyExtension );
 const jeff = new Monkey( 'Jeff' );
 jeff.sayHello();
 // => 'Hello, I am an animal called Jeff and I am a monkey and I live in the jungle'
+```
+
+Or, as a shortcut, you can pass extensions array as an argument to the constructor:
+
+```js
+const monkeyExtension = new Extension(
+  [ typeExtension, livesInJungleExtension ],
+  Class => class extends Class {
+    constructor( name ) {
+      super( name );
+      this.setType( 'monkey' );
+    }
+  }
+);
 ```
 
 ## Usage
@@ -271,16 +286,19 @@ e.g.:
 * `D` uses `B` and `C`
 
 ```js
-const B = new Extension( Class => (
-  class extends Class.extend( A ) { /* ... */ }
+const B = new Extension(
+  [ A ],
+  Class => class extends Class { /* ... */ }
 ) );
 
-const C = new Extension( Class => (
-  class extends Class.extend( A ) { /* ... */ }
+const C = new Extension(
+  [ A ],
+  Class => class extends Class { /* ... */ }
 ) );
 
-const D = new Extension( Class => (
-  class extends Class.extend( B ).extend( C ) { /* ... */ }
+const D = new Extension(
+  [ B, C ],
+  Class => class extends Class { /* ... */ }
 ) );
 ```
 
@@ -288,7 +306,7 @@ So, in this example, `D` depends on `A` via two routes (a "diamond" dependency g
 
 If extension `A` were applied twice, it could cause unexpected behavior.
 
-So `.extend()` recognises duplicate extensions, and avoids applying them more than once.
+`.extend()` deals with this problem. It recognises duplicate extensions, and avoids applying them more than once.
 
 If you call `.extend()` on a class which is already extended with the specified extension, it returns the class unmodified, rather than applying the extension again.
 
@@ -320,7 +338,7 @@ However, this complicates matters. What if two modules require your extension, b
 
 Therefore, when publishing an extension, you must pass into `new Extension()` the name and version of your module. Two extensions with the same `name` will be considered to be the same.
 
-NPM module name is a globally unique identifier, as it's not possible for two modules to be published under the same name on NPM.
+NPM module name acts as a globally unique identifier, as it's not possible for two modules to be published under the same name on NPM.
 
 ```js
 // Published to NPM as `monkey`, version 1.0.0
