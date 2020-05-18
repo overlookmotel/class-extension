@@ -6,15 +6,18 @@
 'use strict';
 
 // Modules
-const {extend, Extension} = require('class-extension');
+const {addMethodsToClass, Extension} = require('class-extension');
 
 // Tests
 
+let Class;
+beforeEach(() => {
+	Class = class {};
+	addMethodsToClass(Class);
+});
+
 describe('`.extend()`', () => {
 	it('returns subclass', () => {
-		class Class {}
-		Class.extend = extend;
-
 		const extension = new Extension(InClass => class extends InClass {});
 		const SubClass = Class.extend(extension);
 
@@ -26,9 +29,6 @@ describe('`.extend()`', () => {
 	});
 
 	it('can be called on subclass', () => {
-		class Class {}
-		Class.extend = extend;
-
 		const extension1 = new Extension(InClass => class extends InClass {});
 		const extension2 = new Extension(InClass => class extends InClass {});
 		const SubClass = Class.extend(extension1);

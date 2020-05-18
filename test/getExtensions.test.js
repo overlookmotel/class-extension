@@ -10,16 +10,20 @@ const {addMethodsToClass, Extension} = require('class-extension');
 
 // Tests
 
+let Class;
+beforeEach(() => {
+	Class = class {};
+	addMethodsToClass(Class);
+});
+
 describe('`.getExtensions()` static method', () => {
 	describe('returns array of extensions', () => {
 		describe('when no extensions and', () => {
 			it('it is not subclassed', () => {
-				const Class = addMethodsToClass(class {});
 				expect(Class.getExtensions()).toBeArrayOfSize(0);
 			});
 
 			it('it is subclassed', () => {
-				const Class = addMethodsToClass(class {});
 				class SubClass extends Class {}
 				expect(SubClass.getExtensions()).toBeArrayOfSize(0);
 			});
@@ -27,7 +31,6 @@ describe('`.getExtensions()` static method', () => {
 
 		describe('when one extension and', () => {
 			it('it is not subclassed', () => {
-				const Class = addMethodsToClass(class {});
 				const extension = new Extension(InClass => class extends InClass {});
 				const SubClass = Class.extend(extension);
 				const extensions = SubClass.getExtensions();
@@ -36,7 +39,6 @@ describe('`.getExtensions()` static method', () => {
 			});
 
 			it('it is subclassed', () => {
-				const Class = addMethodsToClass(class {});
 				const extension = new Extension(InClass => class extends InClass {});
 				const SubClass = Class.extend(extension);
 				class SubSubClass extends SubClass {}
@@ -50,7 +52,6 @@ describe('`.getExtensions()` static method', () => {
 			describe('it is not subclassed', () => {
 				let extension1, extension2, extensions;
 				beforeEach(() => {
-					const Class = addMethodsToClass(class {});
 					extension1 = new Extension(InClass => class extends InClass {});
 					extension2 = new Extension(InClass => class extends InClass {});
 					const SubClass = Class.extend(extension1).extend(extension2);
@@ -72,7 +73,6 @@ describe('`.getExtensions()` static method', () => {
 			describe('it is subclassed', () => {
 				let extension1, extension2, extensions;
 				beforeEach(() => {
-					const Class = addMethodsToClass(class {});
 					extension1 = new Extension(InClass => class extends InClass {});
 					extension2 = new Extension(InClass => class extends InClass {});
 					const SubClass = Class.extend(extension1).extend(extension2);

@@ -10,18 +10,22 @@ const {addMethodsToClass, Extension} = require('class-extension');
 
 // Tests
 
+let Class;
+beforeEach(() => {
+	Class = class {};
+	addMethodsToClass(Class);
+});
+
 describe('`.isExtendedWith()` static method', () => {
 	describe('returns true if', () => {
 		describe('class extended with specified extension and', () => {
 			it('no further extensions added', () => {
-				const Class = addMethodsToClass(class {});
 				const extension = new Extension(InClass => class extends InClass {});
 				const SubClass = Class.extend(extension);
 				expect(SubClass.isExtendedWith(extension)).toBe(true);
 			});
 
 			it('other extension added later', () => {
-				const Class = addMethodsToClass(class {});
 				const extension1 = new Extension(InClass => class extends InClass {}),
 					extension2 = new Extension(InClass => class extends InClass {});
 				const SubClass = Class.extend(extension1)
@@ -33,7 +37,6 @@ describe('`.isExtendedWith()` static method', () => {
 
 		describe('class extended with different version of specified extension and', () => {
 			it('no further extensions added', () => {
-				const Class = addMethodsToClass(class {});
 				const extensionV1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
 					extensionV2 = new Extension('foo', '2.0.0', InClass => class extends InClass {});
 				const SubClass = Class.extend(extensionV1);
@@ -41,7 +44,6 @@ describe('`.isExtendedWith()` static method', () => {
 			});
 
 			it('other extension added later', () => {
-				const Class = addMethodsToClass(class {});
 				const extension1V1 = new Extension('foo', '1.0.0', InClass => class extends InClass {}),
 					extension1V2 = new Extension('foo', '2.0.0', InClass => class extends InClass {}),
 					extension2 = new Extension(InClass => class extends InClass {});
@@ -55,13 +57,11 @@ describe('`.isExtendedWith()` static method', () => {
 
 	describe('return false if', () => {
 		it('class has not been extended', () => {
-			const Class = addMethodsToClass(class {});
 			const extension = new Extension(InClass => class extends InClass {});
 			expect(Class.isExtendedWith(extension)).toBe(false);
 		});
 
 		it('class has been extended with some other extension', () => {
-			const Class = addMethodsToClass(class {});
 			const extension1 = new Extension(InClass => class extends InClass {}),
 				extension2 = new Extension(InClass => class extends InClass {});
 			const SubClass = Class.extend(extension2);
