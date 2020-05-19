@@ -166,21 +166,33 @@ const monkeyExtension = new Extension(
 
 #### Calling the `Extension` class constructor
 
-Constructor can be called with a series of arguments or an object.
+`Extension` constructor has a flexible call signature. It can be called with:
+
+1. A series of arguments
+2. A single options object
+3. A series of options objects
+4. A combination of arguments and options objects
 
 ```js
 const { Extension } = require('class-extension');
 
+// `extend` as argument
 new Extension( Class => class extends Class { /* ... */ } )
 
 // or...
 
+// `extend` as options object property
 new Extension( {
   extend(Class) {
     return class extends Class { /* ... */ };
   }
 } )
 ```
+
+Direct arguments take precedence over properties of options objects, and later options objects override earlier ones. e.g.:
+
+* `( function ext1() {}, { extend: function ext2() {} } )` -> `ext1` is used.
+* `( { extend: function ext1() {} }, { extend: function ext2() {} } )` -> `ext2` is used.
 
 (see below for more arguments)
 

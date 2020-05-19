@@ -374,7 +374,7 @@ describe('Extension class', () => { // eslint-disable-line jest/lowercase-name
 			it('number', () => {
 				expect(() => {
 					new Extension('foo', 1, () => {});
-				}).toThrowWithMessage(TypeError, 'version must be a valid semver version string');
+				}).toThrowWithMessage(TypeError, 'Unrecognised argument: 1');
 			});
 
 			it('incomplete semver string', () => {
@@ -446,13 +446,13 @@ describe('Extension class', () => { // eslint-disable-line jest/lowercase-name
 			it('with args (true)', () => {
 				expect(() => {
 					new Extension(true);
-				}).toThrowWithMessage(TypeError, 'extend must be a function');
+				}).toThrowWithMessage(TypeError, 'Unrecognised argument: true');
 			});
 
 			it('with args (name, version, true)', () => {
 				expect(() => {
 					new Extension('foo', '1.0.0', true);
-				}).toThrowWithMessage(TypeError, 'extend must be a function');
+				}).toThrowWithMessage(TypeError, 'Unrecognised argument: true');
 			});
 
 			it('with args (name, version, {extend: true})', () => {
