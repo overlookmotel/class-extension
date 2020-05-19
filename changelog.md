@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2
+
+Features:
+
+* Call `extension.extend` with extension as 2nd arg
+
 ## 0.3.1
 
 Bug fixes:
