@@ -10,6 +10,9 @@
 // Modules
 const {addMethodsToClass, Extension} = require('class-extension');
 
+// Init
+const spy = jest.fn;
+
 // Tests
 
 let Class;
@@ -19,6 +22,14 @@ beforeEach(() => {
 });
 
 describe('`.extend()`', () => {
+	it('calls extension.extend() with Class and extension', () => {
+		const extend = spy(InClass => class extends InClass {});
+		const extension = new Extension(extend);
+		Class.extend(extension);
+		expect(extend).toHaveBeenCalledTimes(1);
+		expect(extend).toHaveBeenCalledWith(Class, extension);
+	});
+
 	it('returns subclass', () => {
 		const extension = new Extension(InClass => class extends InClass {});
 		const SubClass = Class.extend(extension);

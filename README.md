@@ -198,9 +198,12 @@ Direct arguments take precedence over properties of options objects, and later o
 
 #### Extend function
 
-Extend function will be called with a single argument - the class to extend.
+Extend function will be called with two arguments:
 
-The function must return a subclass of that class.
+1. `Class`: the class to extend
+2. `extension`: the extension object
+
+The function must return a subclass of `Class`.
 
 ### Equip a class for extension
 
