@@ -1,5 +1,15 @@
 # Changelog
 
+## 0.3.1
+
+Bug fixes:
+
+* Make arguments parsing consistent
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.3.0
 
 Breaking changes:
