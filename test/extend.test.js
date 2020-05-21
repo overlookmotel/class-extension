@@ -238,6 +238,41 @@ describe('`.extend()`', () => {
 					expect(instance.getVersion()).toBe('1.0.0');
 				});
 			});
+
+			describe('with diamond dependency graph', () => {
+				it('created by 2 calls to extend()', () => {
+					const extension1 = new Extension(InClass => class extends InClass {
+						constructor() {
+							super();
+							this.count = (this.count || 0) + 1;
+						}
+					});
+					const extension2 = new Extension([extension1], InClass => class extends InClass {});
+					const extension3 = new Extension([extension1], InClass => class extends InClass {});
+					const SubClass = Class.extend(extension2)
+						.extend(extension3);
+					const instance = new SubClass();
+					expect(instance.count).toBe(1);
+				});
+
+				it('created within extension', () => {
+					const extension1 = new Extension(InClass => class extends InClass {
+						constructor() {
+							super();
+							this.count = (this.count || 0) + 1;
+						}
+					});
+					const extension2 = new Extension([extension1], InClass => class extends InClass {});
+					const extension3 = new Extension([extension1], InClass => class extends InClass {});
+					const extension4 = new Extension(
+						[extension2, extension3],
+						InClass => class extends InClass {}
+					);
+					const SubClass = Class.extend(extension4);
+					const instance = new SubClass();
+					expect(instance.count).toBe(1);
+				});
+			});
 		});
 
 		describe('throws if extend with different version of same extension', () => {
