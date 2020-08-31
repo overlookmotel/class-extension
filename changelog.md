@@ -1,5 +1,27 @@
 # Changelog
 
+## 0.3.3
+
+Bug fixes:
+
+* Use null prototype object for named extensions dictionary
+
+Performance:
+
+* Use WeakMap for cache
+
+Dependencies:
+
+* Update `is-it-type` dependency
+
+Tests:
+
+* Tests for diamond dependency graph
+
+Dev:
+
+* Update dev dependencies
+
 ## 0.3.2
 
 Features:
