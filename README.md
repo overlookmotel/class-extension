@@ -345,7 +345,7 @@ SubClass1 === SubClass2 // => true
 
 ### Publishing a class extension to NPM
 
-The aim of class extensions is that they are reuseable, so it makes sense the publish them to NPM.
+The aim of class extensions is that they are reuseable, so it makes sense to publish them to NPM.
 
 A published extension may depend on other published extensions itself.
 
