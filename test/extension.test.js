@@ -12,7 +12,7 @@ const {Extension} = require('class-extension');
 
 // Tests
 
-describe('Extension class', () => { // eslint-disable-line jest/lowercase-name
+describe('Extension class', () => {
 	describe('with args (name, version, extend)', () => {
 		let extension, extend;
 		beforeEach(() => {
