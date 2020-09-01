@@ -465,7 +465,7 @@ const livesInJungleExtension = require('lives-in-jungle');
 
 const monkeyExtension = new Extension(
   require('./package.json'),
-  { extends: [ livesInJungleExtension ] },
+  [ livesInJungleExtension ],
   Class => class extends Class { /* ... */ }
 );
 ```
