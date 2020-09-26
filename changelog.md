@@ -1,5 +1,24 @@
 # Changelog
 
+## 0.3.4
+
+Features:
+
+* Export symbols
+
+Dev:
+
+* Update dev dependencies
+
+No code:
+
+* Fix lint error
+
+Docs:
+
+* Simplify code example
+* Fix typo in README [fix]
+
 ## 0.3.3
 
 Bug fixes:
